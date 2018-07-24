@@ -74,7 +74,7 @@ ipfw_set_exists(const fko_srv_options_t *opts,
 
     zero_cmd_buffers();
 
-    snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " IPFW_LIST_SET_RULES_ARGS,
+    snprintf(cmd_buf, CMD_BUFSIZE, "%s " IPFW_LIST_SET_RULES_ARGS,
         fw_command,
         set_num
     );
@@ -111,7 +111,7 @@ fw_dump_rules(const fko_srv_options_t * const opts)
 
         /* Create the list command for all rules
         */
-        snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " IPFW_LIST_ALL_RULES_ARGS,
+        snprintf(cmd_buf, CMD_BUFSIZE, "%s " IPFW_LIST_ALL_RULES_ARGS,
             opts->fw_config->fw_command
         );
 
@@ -137,7 +137,7 @@ fw_dump_rules(const fko_srv_options_t * const opts)
 
         /* Create the list command for active rules
         */
-        snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " IPFW_LIST_RULES_ARGS,
+        snprintf(cmd_buf, CMD_BUFSIZE, "%s " IPFW_LIST_RULES_ARGS,
             opts->fw_config->fw_command,
             opts->fw_config->active_set_num
         );
@@ -158,7 +158,7 @@ fw_dump_rules(const fko_srv_options_t * const opts)
 
         /* Create the list command for expired rules
         */
-        snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " IPFW_LIST_RULES_ARGS,
+        snprintf(cmd_buf, CMD_BUFSIZE, "%s " IPFW_LIST_RULES_ARGS,
             opts->fw_config->fw_command,
             opts->fw_config->expire_set_num
         );
@@ -284,7 +284,7 @@ fw_initialize(const fko_srv_options_t * const opts)
     {
         zero_cmd_buffers();
 
-        snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " IPFW_ADD_CHECK_STATE_ARGS,
+        snprintf(cmd_buf, CMD_BUFSIZE, "%s " IPFW_ADD_CHECK_STATE_ARGS,
             fwc.fw_command,
             fwc.start_rule_num,
             fwc.active_set_num
@@ -316,7 +316,7 @@ fw_initialize(const fko_srv_options_t * const opts)
         */
         zero_cmd_buffers();
 
-        snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " IPFW_DISABLE_SET_ARGS,
+        snprintf(cmd_buf, CMD_BUFSIZE, "%s " IPFW_DISABLE_SET_ARGS,
             fwc.fw_command,
             fwc.expire_set_num
         );
@@ -339,7 +339,7 @@ fw_initialize(const fko_srv_options_t * const opts)
     */
     zero_cmd_buffers();
 
-    snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " IPFW_LIST_EXP_SET_RULES_ARGS,
+    snprintf(cmd_buf, CMD_BUFSIZE, "%s " IPFW_LIST_EXP_SET_RULES_ARGS,
         opts->fw_config->fw_command,
         fwc.expire_set_num
     );
@@ -421,7 +421,7 @@ fw_cleanup(const fko_srv_options_t * const opts)
     {
         /* Create the set delete command for active rules
         */
-        snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " IPFW_DEL_RULE_SET_ARGS,
+        snprintf(cmd_buf, CMD_BUFSIZE, "%s " IPFW_DEL_RULE_SET_ARGS,
             fwc.fw_command,
             fwc.active_set_num
         );
@@ -448,7 +448,7 @@ fw_cleanup(const fko_srv_options_t * const opts)
     {
         /* Create the set delete command for expired rules
         */
-        snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " IPFW_DEL_RULE_SET_ARGS,
+        snprintf(cmd_buf, CMD_BUFSIZE, "%s " IPFW_DEL_RULE_SET_ARGS,
             fwc.fw_command,
             fwc.expire_set_num
         );
@@ -530,7 +530,7 @@ process_spa_request(const fko_srv_options_t * const opts,
         {
             zero_cmd_buffers();
 
-            snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " IPFW_ADD_RULE_ARGS,
+            snprintf(cmd_buf, CMD_BUFSIZE, "%s " IPFW_ADD_RULE_ARGS,
                 fwc.fw_command,
                 rule_num,
                 fwc.active_set_num,
@@ -632,7 +632,7 @@ check_firewall_rules(const fko_srv_options_t * const opts,
     /* There should be a rule to delete.  Get the current list of
      * rules for this chain and delete the ones that are expired.
     */
-    snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " IPFW_LIST_SET_RULES_ARGS,
+    snprintf(cmd_buf, CMD_BUFSIZE, "%s " IPFW_LIST_SET_RULES_ARGS,
         opts->fw_config->fw_command,
         fwc.active_set_num
     );
@@ -748,7 +748,7 @@ check_firewall_rules(const fko_srv_options_t * const opts,
 
                 /* Move the rule to the expired rules set.
                 */
-                snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " IPFW_MOVE_RULE_ARGS,
+                snprintf(cmd_buf, CMD_BUFSIZE, "%s " IPFW_MOVE_RULE_ARGS,
                     opts->fw_config->fw_command,
                     curr_rule,
                     fwc.expire_set_num
@@ -818,7 +818,7 @@ ipfw_purge_expired_rules(const fko_srv_options_t *opts)
     */
     zero_cmd_buffers();
 
-    snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " IPFW_LIST_SET_DYN_RULES_ARGS,
+    snprintf(cmd_buf, CMD_BUFSIZE, "%s " IPFW_LIST_SET_DYN_RULES_ARGS,
         opts->fw_config->fw_command,
         fwc.expire_set_num
     );
@@ -923,7 +923,7 @@ ipfw_purge_expired_rules(const fko_srv_options_t *opts)
 
         curr_rule = fwc.start_rule_num + i;
 
-        snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " IPFW_DEL_RULE_ARGS,
+        snprintf(cmd_buf, CMD_BUFSIZE, "%s " IPFW_DEL_RULE_ARGS,
             opts->fw_config->fw_command,
 #ifndef __APPLE__
             fwc.expire_set_num,

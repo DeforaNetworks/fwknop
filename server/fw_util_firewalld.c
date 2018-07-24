@@ -81,7 +81,7 @@ rule_exists_no_chk_support(const fko_srv_options_t * const opts,
     char    exp_ts_search[CMD_BUFSIZE]   = {0};
     char    *ndx = NULL;
 
-    snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_LIST_RULES_ARGS,
+    snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_LIST_RULES_ARGS,
         opts->fw_config->fw_command,
         fwc->table,
         fwc->to_chain
@@ -98,28 +98,28 @@ rule_exists_no_chk_support(const fko_srv_options_t * const opts,
 #endif
 
     if(proto == IPPROTO_TCP)
-        snprintf(proto_search, CMD_BUFSIZE-1, " tcp ");
+        snprintf(proto_search, CMD_BUFSIZE, " tcp ");
     else if(proto == IPPROTO_UDP)
-        snprintf(proto_search, CMD_BUFSIZE-1, " udp ");
+        snprintf(proto_search, CMD_BUFSIZE, " udp ");
     else if(proto == IPPROTO_ICMP)
-        snprintf(proto_search, CMD_BUFSIZE-1, " icmp ");
+        snprintf(proto_search, CMD_BUFSIZE, " icmp ");
     else
-        snprintf(proto_search, CMD_BUFSIZE-1, " %u ", proto);
+        snprintf(proto_search, CMD_BUFSIZE, " %u ", proto);
 
-    snprintf(port_search, CMD_BUFSIZE-1, "dpt:%u ", port);
-    snprintf(nat_port_search, CMD_BUFSIZE-1, ":%u", nat_port);
-    snprintf(target_search, CMD_BUFSIZE-1, " %s ", fwc->target);
+    snprintf(port_search, CMD_BUFSIZE, "dpt:%u ", port);
+    snprintf(nat_port_search, CMD_BUFSIZE, ":%u", nat_port);
+    snprintf(target_search, CMD_BUFSIZE, " %s ", fwc->target);
 
     if (srcip != NULL)
-        snprintf(srcip_search, CMD_BUFSIZE-1, " %s ", srcip);
+        snprintf(srcip_search, CMD_BUFSIZE, " %s ", srcip);
 
     if (dstip != NULL)
-        snprintf(dstip_search, CMD_BUFSIZE-1, " %s ", dstip);
+        snprintf(dstip_search, CMD_BUFSIZE, " %s ", dstip);
 
     if (natip != NULL)
-        snprintf(natip_search, CMD_BUFSIZE-1, " to:%s", natip);
+        snprintf(natip_search, CMD_BUFSIZE, " to:%s", natip);
 
-    snprintf(exp_ts_search, CMD_BUFSIZE-1, "%u ", exp_ts);
+    snprintf(exp_ts_search, CMD_BUFSIZE, "%u ", exp_ts);
 
     /* search for each of the substrings - the rule expiration time is the
      * primary search method
@@ -193,7 +193,7 @@ rule_exists_chk_support(const fko_srv_options_t * const opts,
 
     zero_cmd_buffers();
 
-    snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_CHK_RULE_ARGS,
+    snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_CHK_RULE_ARGS,
             opts->fw_config->fw_command, chain, rule);
 
     res = run_extcmd(cmd_buf, err_buf, CMD_BUFSIZE,
@@ -264,7 +264,7 @@ firewd_chk_support(const fko_srv_options_t * const opts)
      * supports '-C' to check for it.  Set "have_firewd_chk_support" accordingly,
      * delete the rule, and return.
     */
-    snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_TMP_CHK_RULE_ARGS,
+    snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_TMP_CHK_RULE_ARGS,
         opts->fw_config->fw_command,
         in_chain->table,
         in_chain->from_chain,
@@ -283,7 +283,7 @@ firewd_chk_support(const fko_srv_options_t * const opts)
 
     /* Now see if '-C' works
     */
-    snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_TMP_VERIFY_CHK_ARGS,
+    snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_TMP_VERIFY_CHK_ARGS,
         opts->fw_config->fw_command,
         in_chain->table,
         in_chain->from_chain,
@@ -312,7 +312,7 @@ firewd_chk_support(const fko_srv_options_t * const opts)
     */
     zero_cmd_buffers();
 
-    snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_DEL_RULE_ARGS,
+    snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_DEL_RULE_ARGS,
         opts->fw_config->fw_command,
         in_chain->table,
         in_chain->from_chain,
@@ -337,7 +337,7 @@ comment_match_exists(const fko_srv_options_t * const opts)
      * match and make sure it exists.  If not, return zero.  Otherwise, delete
      * the rule and return true.
     */
-    snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_TMP_COMMENT_ARGS,
+    snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_TMP_COMMENT_ARGS,
         opts->fw_config->fw_command,
         in_chain->table,
         in_chain->from_chain,
@@ -359,7 +359,7 @@ comment_match_exists(const fko_srv_options_t * const opts)
 
     zero_cmd_buffers();
 
-    snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_LIST_RULES_ARGS,
+    snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_LIST_RULES_ARGS,
         opts->fw_config->fw_command,
         in_chain->table,
         in_chain->from_chain
@@ -385,7 +385,7 @@ comment_match_exists(const fko_srv_options_t * const opts)
         */
         zero_cmd_buffers();
 
-        snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_DEL_RULE_ARGS,
+        snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_DEL_RULE_ARGS,
             opts->fw_config->fw_command,
             in_chain->table,
             in_chain->from_chain,
@@ -405,7 +405,7 @@ add_jump_rule(const fko_srv_options_t * const opts, const int chain_num)
 
     zero_cmd_buffers();
 
-    snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_ADD_JUMP_RULE_ARGS,
+    snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_ADD_JUMP_RULE_ARGS,
         fwc.fw_command,
         fwc.chain[chain_num].table,
         fwc.chain[chain_num].from_chain,
@@ -440,7 +440,7 @@ chain_exists(const fko_srv_options_t * const opts, const int chain_num)
 
     zero_cmd_buffers();
 
-    snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_CHAIN_EXISTS_ARGS,
+    snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_CHAIN_EXISTS_ARGS,
         fwc.fw_command,
         fwc.chain[chain_num].table,
         fwc.chain[chain_num].to_chain
@@ -474,7 +474,7 @@ jump_rule_exists_chk_support(const fko_srv_options_t * const opts, const int cha
     int    exists = 0;
     char   rule_buf[CMD_BUFSIZE] = {0};
 
-    snprintf(rule_buf, CMD_BUFSIZE-1, FIREWD_CHK_JUMP_RULE_ARGS,
+    snprintf(rule_buf, CMD_BUFSIZE, FIREWD_CHK_JUMP_RULE_ARGS,
         fwc.chain[chain_num].table,
         fwc.chain[chain_num].to_chain
     );
@@ -497,7 +497,7 @@ jump_rule_exists_no_chk_support(const fko_srv_options_t * const opts,
     int     exists = 0;
     char    chain_search[CMD_BUFSIZE] = {0};
 
-    snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_LIST_RULES_ARGS,
+    snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_LIST_RULES_ARGS,
         fwc.fw_command,
         fwc.chain[chain_num].table,
         fwc.chain[chain_num].from_chain
@@ -505,7 +505,7 @@ jump_rule_exists_no_chk_support(const fko_srv_options_t * const opts,
 
     /* include spaces on either side as produced by 'firewalld -L' output
     */
-    snprintf(chain_search, CMD_BUFSIZE-1, " %s ",
+    snprintf(chain_search, CMD_BUFSIZE, " %s ",
         fwc.chain[chain_num].to_chain);
 
     if(search_extcmd(cmd_buf, WANT_STDERR,
@@ -560,7 +560,7 @@ fw_dump_rules(const fko_srv_options_t * const opts)
 
             /* Create the list command
             */
-            snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_LIST_ALL_RULES_ARGS,
+            snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_LIST_ALL_RULES_ARGS,
                 opts->fw_config->fw_command,
                 ch[i].table
             );
@@ -594,7 +594,7 @@ fw_dump_rules(const fko_srv_options_t * const opts)
 
             /* Create the list command
             */
-            snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_LIST_RULES_ARGS,
+            snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_LIST_RULES_ARGS,
                 opts->fw_config->fw_command,
                 ch[i].table,
                 ch[i].to_chain
@@ -642,7 +642,7 @@ delete_all_chains(const fko_srv_options_t * const opts)
         {
             zero_cmd_buffers();
 
-            snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_DEL_JUMP_RULE_ARGS,
+            snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_DEL_JUMP_RULE_ARGS,
                 fwc.fw_command,
                 fwc.chain[i].table,
                 fwc.chain[i].from_chain,
@@ -668,7 +668,7 @@ delete_all_chains(const fko_srv_options_t * const opts)
 
         /* Now flush and remove the chain.
         */
-        snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_FLUSH_CHAIN_ARGS,
+        snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_FLUSH_CHAIN_ARGS,
             fwc.fw_command,
             fwc.chain[i].table,
             fwc.chain[i].to_chain
@@ -688,7 +688,7 @@ delete_all_chains(const fko_srv_options_t * const opts)
 
         zero_cmd_buffers();
 
-        snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_DEL_CHAIN_ARGS,
+        snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_DEL_CHAIN_ARGS,
             fwc.fw_command,
             fwc.chain[i].table,
             fwc.chain[i].to_chain
@@ -713,7 +713,7 @@ delete_all_chains(const fko_srv_options_t * const opts)
 
             /* Delete the rule to direct traffic to the NFQ chain.
             */
-            snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_DEL_RULE_ARGS,
+            snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_DEL_RULE_ARGS,
                 fwc.fw_command,
                 opts->config[CONF_NFQ_TABLE],
                 "INPUT",
@@ -734,7 +734,7 @@ delete_all_chains(const fko_srv_options_t * const opts)
 
             /* Flush the NFQ chain
             */
-            snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_FLUSH_CHAIN_ARGS,
+            snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_FLUSH_CHAIN_ARGS,
                 fwc.fw_command,
                 opts->config[CONF_NFQ_TABLE],
                 opts->config[CONF_NFQ_CHAIN]
@@ -754,7 +754,7 @@ delete_all_chains(const fko_srv_options_t * const opts)
 
             /* Delete the NF_QUEUE chains and rules
             */
-            snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_DEL_CHAIN_ARGS,
+            snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_DEL_CHAIN_ARGS,
                 fwc.fw_command,
                 opts->config[CONF_NFQ_TABLE],
                 opts->config[CONF_NFQ_CHAIN]
@@ -784,7 +784,7 @@ create_chain(const fko_srv_options_t * const opts, const int chain_num)
 
     /* Create the custom chain.
     */
-    snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_NEW_CHAIN_ARGS,
+    snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_NEW_CHAIN_ARGS,
         fwc.fw_command,
         fwc.chain[chain_num].table,
         fwc.chain[chain_num].to_chain
@@ -849,7 +849,7 @@ create_fw_chains(const fko_srv_options_t * const opts)
 
         /* Create the NF_QUEUE chains and rules
         */
-        snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_NEW_CHAIN_ARGS,
+        snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_NEW_CHAIN_ARGS,
             fwc.fw_command,
             opts->config[CONF_NFQ_TABLE],
             opts->config[CONF_NFQ_CHAIN]
@@ -872,7 +872,7 @@ create_fw_chains(const fko_srv_options_t * const opts)
 
         /* Create the rule to direct traffic to the NFQ chain.
         */
-        snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_ADD_JUMP_RULE_ARGS,
+        snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_ADD_JUMP_RULE_ARGS,
             fwc.fw_command,
             opts->config[CONF_NFQ_TABLE],
             "INPUT",
@@ -901,7 +901,7 @@ create_fw_chains(const fko_srv_options_t * const opts)
         */
         if(strlen(opts->config[CONF_NFQ_INTERFACE]) > 0)
         {
-            snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_NFQ_ADD_ARGS_WITH_IF,
+            snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_NFQ_ADD_ARGS_WITH_IF,
                 fwc.fw_command,
                 opts->config[CONF_NFQ_TABLE],
                 opts->config[CONF_NFQ_CHAIN],
@@ -912,7 +912,7 @@ create_fw_chains(const fko_srv_options_t * const opts)
         }
         else
         {
-            snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_NFQ_ADD_ARGS,
+            snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_NFQ_ADD_ARGS,
                 fwc.fw_command,
                 opts->config[CONF_NFQ_TABLE],
                 opts->config[CONF_NFQ_CHAIN],
@@ -1172,10 +1172,10 @@ create_rule(const fko_srv_options_t * const opts,
     zero_cmd_buffers();
 
     if (strncasecmp(opts->config[CONF_ENABLE_RULE_PREPEND], "Y", 1) == 0) {
-        snprintf(cmd_buf, CMD_BUFSIZE-1, "%s -I %s %s",
+        snprintf(cmd_buf, CMD_BUFSIZE, "%s -I %s %s",
                 opts->fw_config->fw_command, fw_chain, fw_rule);
     } else {
-        snprintf(cmd_buf, CMD_BUFSIZE-1, "%s -A %s %s",
+        snprintf(cmd_buf, CMD_BUFSIZE, "%s -A %s %s",
                 opts->fw_config->fw_command, fw_chain, fw_rule);
     }
 
@@ -1224,7 +1224,7 @@ firewd_rule(const fko_srv_options_t * const opts,
     {
         memset(rule_buf, 0, CMD_BUFSIZE);
 
-        snprintf(rule_buf, CMD_BUFSIZE-1, fw_rule_macro,
+        snprintf(rule_buf, CMD_BUFSIZE, fw_rule_macro,
             chain->table,
             proto,
             srcip,
@@ -1283,7 +1283,7 @@ static void forward_access_rule(const fko_srv_options_t * const opts,
     if(acc->forward_all)
     {
 
-        snprintf(rule_buf, CMD_BUFSIZE-1, FIREWD_FWD_ALL_RULE_ARGS,
+        snprintf(rule_buf, CMD_BUFSIZE, FIREWD_FWD_ALL_RULE_ARGS,
             fwd_chain->table,
             spadat->use_src_ip,
             exp_ts,
@@ -1300,7 +1300,7 @@ static void forward_access_rule(const fko_srv_options_t * const opts,
     {
         /* Make the FORWARD access rule
         */
-        snprintf(rule_buf, CMD_BUFSIZE-1, FIREWD_FWD_RULE_ARGS,
+        snprintf(rule_buf, CMD_BUFSIZE, FIREWD_FWD_RULE_ARGS,
             fwd_chain->table,
             fst_proto,
             spadat->use_src_ip,
@@ -1335,7 +1335,7 @@ static void dnat_rule(const fko_srv_options_t * const opts,
     {
         memset(rule_buf, 0, CMD_BUFSIZE);
 
-        snprintf(rule_buf, CMD_BUFSIZE-1, FIREWD_DNAT_ALL_RULE_ARGS,
+        snprintf(rule_buf, CMD_BUFSIZE, FIREWD_DNAT_ALL_RULE_ARGS,
             dnat_chain->table,
             spadat->use_src_ip,
             (fwc.use_destination ? spadat->pkt_destination_ip : FIREWD_ANY_IP),
@@ -1354,7 +1354,7 @@ static void dnat_rule(const fko_srv_options_t * const opts,
     {
         memset(rule_buf, 0, CMD_BUFSIZE);
 
-        snprintf(rule_buf, CMD_BUFSIZE-1, FIREWD_DNAT_RULE_ARGS,
+        snprintf(rule_buf, CMD_BUFSIZE, FIREWD_DNAT_RULE_ARGS,
             dnat_chain->table,
             fst_proto,
             spadat->use_src_ip,
@@ -1398,7 +1398,7 @@ static void snat_rule(const fko_srv_options_t * const opts,
     {
         /* Default to MASQUERADE */
         snat_chain = &(opts->fw_config->chain[FIREWD_MASQUERADE_ACCESS]);
-        snprintf(snat_target, SNAT_TARGET_BUFSIZE-1, " ");
+        snprintf(snat_target, SNAT_TARGET_BUFSIZE, " ");
 
         /* Add SNAT or MASQUERADE rules.
         */
@@ -1406,7 +1406,7 @@ static void snat_rule(const fko_srv_options_t * const opts,
         {
             /* Using static SNAT */
             snat_chain = &(opts->fw_config->chain[FIREWD_SNAT_ACCESS]);
-            snprintf(snat_target, SNAT_TARGET_BUFSIZE-1,
+            snprintf(snat_target, SNAT_TARGET_BUFSIZE,
                 "--to-source %s", acc->force_snat_ip);
         }
         else if((opts->config[CONF_SNAT_TRANSLATE_IP] != NULL)
@@ -1414,13 +1414,13 @@ static void snat_rule(const fko_srv_options_t * const opts,
         {
             /* Using static SNAT */
             snat_chain = &(opts->fw_config->chain[FIREWD_SNAT_ACCESS]);
-            snprintf(snat_target, SNAT_TARGET_BUFSIZE-1,
+            snprintf(snat_target, SNAT_TARGET_BUFSIZE,
                 "--to-source %s", opts->config[CONF_SNAT_TRANSLATE_IP]);
         }
 
         memset(rule_buf, 0, CMD_BUFSIZE);
 
-        snprintf(rule_buf, CMD_BUFSIZE-1, FIREWD_SNAT_ALL_RULE_ARGS,
+        snprintf(rule_buf, CMD_BUFSIZE, FIREWD_SNAT_ALL_RULE_ARGS,
             snat_chain->table,
             spadat->use_src_ip,
             exp_ts,
@@ -1440,14 +1440,14 @@ static void snat_rule(const fko_srv_options_t * const opts,
         {
             /* Using static SNAT */
             snat_chain = &(opts->fw_config->chain[FIREWD_SNAT_ACCESS]);
-            snprintf(snat_target, SNAT_TARGET_BUFSIZE-1,
+            snprintf(snat_target, SNAT_TARGET_BUFSIZE,
                 "--to-source %s", acc->force_snat_ip);
         }
         else if(acc->force_snat && acc->force_masquerade)
         {
             /* Using MASQUERADE */
             snat_chain = &(opts->fw_config->chain[FIREWD_MASQUERADE_ACCESS]);
-            snprintf(snat_target, SNAT_TARGET_BUFSIZE-1,
+            snprintf(snat_target, SNAT_TARGET_BUFSIZE,
                 "--to-ports %i", fst_port);
         }
         else if((opts->config[CONF_SNAT_TRANSLATE_IP] != NULL)
@@ -1455,20 +1455,20 @@ static void snat_rule(const fko_srv_options_t * const opts,
         {
             /* Using static SNAT */
             snat_chain = &(opts->fw_config->chain[FIREWD_SNAT_ACCESS]);
-            snprintf(snat_target, SNAT_TARGET_BUFSIZE-1,
+            snprintf(snat_target, SNAT_TARGET_BUFSIZE,
                 "--to-source %s", opts->config[CONF_SNAT_TRANSLATE_IP]);
         }
         else
         {
             /* Using MASQUERADE */
             snat_chain = &(opts->fw_config->chain[FIREWD_MASQUERADE_ACCESS]);
-            snprintf(snat_target, SNAT_TARGET_BUFSIZE-1,
+            snprintf(snat_target, SNAT_TARGET_BUFSIZE,
                 "--to-ports %i", fst_port);
         }
 
         memset(rule_buf, 0, CMD_BUFSIZE);
 
-        snprintf(rule_buf, CMD_BUFSIZE-1, FIREWD_SNAT_RULE_ARGS,
+        snprintf(rule_buf, CMD_BUFSIZE, FIREWD_SNAT_RULE_ARGS,
             snat_chain->table,
             fst_proto,
             nat_ip,
@@ -1773,7 +1773,7 @@ rm_expired_rules(const fko_srv_options_t * const opts,
 
             zero_cmd_buffers();
 
-            snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_DEL_RULE_ARGS,
+            snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_DEL_RULE_ARGS,
                 opts->fw_config->fw_command,
                 ch[cpos].table,
                 ch[cpos].to_chain,
@@ -1868,7 +1868,7 @@ check_firewall_rules(const fko_srv_options_t * const opts,
          * from fwknopd) to take advantage of fwknopd's timeout
          * mechanism.
         */
-        snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " FIREWD_LIST_RULES_ARGS,
+        snprintf(cmd_buf, CMD_BUFSIZE, "%s " FIREWD_LIST_RULES_ARGS,
             opts->fw_config->fw_command,
             ch[i].table,
             ch[i].to_chain

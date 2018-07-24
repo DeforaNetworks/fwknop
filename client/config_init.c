@@ -1339,22 +1339,22 @@ add_single_var_to_rc(FILE* fhandle, short var_pos, fko_cli_options_t *options)
             proto_inttostr(options->spa_proto, val, sizeof(val));
             break;
         case FWKNOP_CLI_ARG_SPA_SERVER_PORT :
-            snprintf(val, sizeof(val)-1, "%d", options->spa_dst_port);
+            snprintf(val, sizeof(val), "%d", options->spa_dst_port);
             break;
         case FWKNOP_CLI_ARG_SPA_SOURCE_PORT :
-            snprintf(val, sizeof(val)-1, "%d", options->spa_src_port);
+            snprintf(val, sizeof(val), "%d", options->spa_src_port);
             break;
         case FWKNOP_CLI_ARG_FW_TIMEOUT :
-            snprintf(val, sizeof(val)-1, "%d", options->fw_timeout);
+            snprintf(val, sizeof(val), "%d", options->fw_timeout);
             break;
         case FWKNOP_CLI_ARG_ALLOW_IP :
             strlcpy(val, options->allow_ip_str, sizeof(val));
             break;
         case FWKNOP_CLI_ARG_TIME_OFFSET :
             if (options->time_offset_minus != 0)
-                snprintf(val, sizeof(val)-1, "-%d", options->time_offset_minus);
+                snprintf(val, sizeof(val), "-%d", options->time_offset_minus);
             else if (options->time_offset_plus != 0)
-                snprintf(val, sizeof(val)-1, "%d", options->time_offset_plus);
+                snprintf(val, sizeof(val), "%d", options->time_offset_plus);
             else;
             break;
         case FWKNOP_CLI_ARG_ENCRYPTION_MODE :
@@ -1444,13 +1444,13 @@ add_single_var_to_rc(FILE* fhandle, short var_pos, fko_cli_options_t *options)
             bool_to_yesno(options->nat_rand_port, val, sizeof(val));
             break;
         case FWKNOP_CLI_ARG_NAT_PORT :
-            snprintf(val, sizeof(val)-1, "%d", options->nat_port);
+            snprintf(val, sizeof(val), "%d", options->nat_port);
             break;
         case FWKNOP_CLI_ARG_VERBOSE:
             if((options->verbose == 0) || (options->verbose == 1))
                 bool_to_yesno(options->verbose, val, sizeof(val));
             else
-                snprintf(val, sizeof(val)-1, "%d", options->verbose);
+                snprintf(val, sizeof(val), "%d", options->verbose);
             break;
         case FWKNOP_CLI_ARG_RESOLVE_IP_HTTPS:
             bool_to_yesno(options->resolve_ip_http_https, val, sizeof(val));

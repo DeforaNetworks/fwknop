@@ -65,7 +65,7 @@ fw_dump_rules(const fko_srv_options_t * const opts)
 
     /* Create the list command for active rules
     */
-    snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " PF_LIST_ANCHOR_RULES_ARGS,
+    snprintf(cmd_buf, CMD_BUFSIZE, "%s " PF_LIST_ANCHOR_RULES_ARGS,
         opts->fw_config->fw_command,
         opts->fw_config->anchor
     );
@@ -98,12 +98,12 @@ anchor_active(const fko_srv_options_t *opts)
 
     /* Build our anchor search string
     */
-    snprintf(anchor_search_str, MAX_PF_ANCHOR_SEARCH_LEN-1, "%s\n",
+    snprintf(anchor_search_str, MAX_PF_ANCHOR_SEARCH_LEN, "%s\n",
         opts->fw_config->anchor);
 
     zero_cmd_buffers();
 
-    snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " PF_ANCHOR_CHECK_ARGS,
+    snprintf(cmd_buf, CMD_BUFSIZE, "%s " PF_ANCHOR_CHECK_ARGS,
         opts->fw_config->fw_command
     );
 
@@ -123,7 +123,7 @@ delete_all_anchor_rules(const fko_srv_options_t *opts)
 
     zero_cmd_buffers();
 
-    snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " PF_DEL_ALL_ANCHOR_RULES,
+    snprintf(cmd_buf, CMD_BUFSIZE, "%s " PF_DEL_ALL_ANCHOR_RULES,
         fwc.fw_command,
         fwc.anchor
     );
@@ -231,7 +231,7 @@ process_spa_request(const fko_srv_options_t * const opts,
         {
             zero_cmd_buffers();
 
-            snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " PF_LIST_ANCHOR_RULES_ARGS,
+            snprintf(cmd_buf, CMD_BUFSIZE, "%s " PF_LIST_ANCHOR_RULES_ARGS,
                 opts->fw_config->fw_command,
                 opts->fw_config->anchor
             );
@@ -244,7 +244,7 @@ process_spa_request(const fko_srv_options_t * const opts,
             /* Build the new rule string
             */
             memset(new_rule, 0x0, MAX_PF_NEW_RULE_LEN);
-            snprintf(new_rule, MAX_PF_NEW_RULE_LEN-1, PF_ADD_RULE_ARGS "\n",
+            snprintf(new_rule, MAX_PF_NEW_RULE_LEN, PF_ADD_RULE_ARGS "\n",
                 ple->proto,
                 spadat->use_src_ip,
                 (fwc.use_destination ? spadat->pkt_destination_ip : PF_ANY_IP),
@@ -260,7 +260,7 @@ process_spa_request(const fko_srv_options_t * const opts,
 
                 memset(write_cmd, 0x0, CMD_BUFSIZE);
 
-                snprintf(write_cmd, CMD_BUFSIZE-1, "%s " PF_WRITE_ANCHOR_RULES_ARGS,
+                snprintf(write_cmd, CMD_BUFSIZE, "%s " PF_WRITE_ANCHOR_RULES_ARGS,
                     opts->fw_config->fw_command,
                     opts->fw_config->anchor
                 );
@@ -362,7 +362,7 @@ check_firewall_rules(const fko_srv_options_t * const opts,
     /* There should be a rule to delete.  Get the current list of
      * rules and delete the ones that are expired.
     */
-    snprintf(cmd_buf, CMD_BUFSIZE-1, "%s " PF_LIST_ANCHOR_RULES_ARGS,
+    snprintf(cmd_buf, CMD_BUFSIZE, "%s " PF_LIST_ANCHOR_RULES_ARGS,
         opts->fw_config->fw_command,
         opts->fw_config->anchor
     );
@@ -503,7 +503,7 @@ check_firewall_rules(const fko_srv_options_t * const opts,
         {
             memset(write_cmd, 0x0, CMD_BUFSIZE);
 
-            snprintf(write_cmd, CMD_BUFSIZE-1, "%s " PF_WRITE_ANCHOR_RULES_ARGS,
+            snprintf(write_cmd, CMD_BUFSIZE, "%s " PF_WRITE_ANCHOR_RULES_ARGS,
                 opts->fw_config->fw_command,
                 opts->fw_config->anchor
             );
